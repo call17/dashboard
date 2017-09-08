@@ -85,7 +85,7 @@ public final class DashboardMenu extends CustomComponent {
     }
 
     private Component buildTitle() {
-        Label logo = new Label("QuickTickets <strong>Dashboard</strong>",
+        Label logo = new Label("Оперативный Портал <strong>ЕФС</strong>",
                 ContentMode.HTML);
         logo.setSizeUndefined();
         HorizontalLayout logoWrapper = new HorizontalLayout(logo);
@@ -103,29 +103,8 @@ public final class DashboardMenu extends CustomComponent {
     private Component buildUserMenu() {
         final MenuBar settings = new MenuBar();
         settings.addStyleName("user-menu");
-        final User user = getCurrentUser();
         settingsItem = settings.addItem("",
-                new ThemeResource("img/profile-pic-300px.jpg"), null);
-        updateUserName(null);
-        settingsItem.addItem("Edit Profile", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-                ProfilePreferencesWindow.open(user, false);
-            }
-        });
-        settingsItem.addItem("Preferences", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-                ProfilePreferencesWindow.open(user, true);
-            }
-        });
-        settingsItem.addSeparator();
-        settingsItem.addItem("Sign Out", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-                DashboardEventBus.post(new UserLoggedOutEvent());
-            }
-        });
+                new ThemeResource("img/efs.jpg"), null);
         return settings;
     }
 
@@ -240,11 +219,6 @@ public final class DashboardMenu extends CustomComponent {
         reportsBadge.setVisible(event.getCount() > 0);
     }
 
-    @Subscribe
-    public void updateUserName(final ProfileUpdatedEvent event) {
-        User user = getCurrentUser();
-        settingsItem.setText(user.getFirstName() + " " + user.getLastName());
-    }
 
     public final class ValoMenuItemButton extends Button {
 

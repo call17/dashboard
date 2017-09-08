@@ -14,7 +14,7 @@ import com.vaadin.demo.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import com.vaadin.demo.dashboard.event.DashboardEvent.UserLoggedOutEvent;
 import com.vaadin.demo.dashboard.event.DashboardEvent.UserLoginRequestedEvent;
 import com.vaadin.demo.dashboard.event.DashboardEventBus;
-import com.vaadin.demo.dashboard.view.LoginView;
+import com.vaadin.demo.dashboard.view.WelcomeView;
 import com.vaadin.demo.dashboard.view.MainView;
 import com.vaadin.server.Page;
 import com.vaadin.server.Page.BrowserWindowResizeEvent;
@@ -77,7 +77,7 @@ public final class DashboardUI extends UI {
             removeStyleName("loginview");
             getNavigator().navigateTo(getNavigator().getState());
         } else {
-            setContent(new LoginView());
+            setContent(new MainView());
             addStyleName("loginview");
         }
     }
