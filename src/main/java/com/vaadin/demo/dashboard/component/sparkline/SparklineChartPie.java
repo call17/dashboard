@@ -48,30 +48,23 @@ public class SparklineChartPie extends VerticalLayout {
         spark.getConfiguration().getChart().setType(ChartType.PIE);
         spark.getConfiguration().getChart().setAnimation(false);
         spark.setWidth("120px");
-        spark.setHeight("60px");
-        DataSeries series = new DataSeries();
+        spark.setHeight("70px");
 
-        series.add(new DataSeriesItem("", 59));
 
-        spark.getConfiguration().setSeries(series);
-//        spark.getConfiguration().getTooltip().setEnabled(false);
 
-        Configuration conf = series.getConfiguration();
-        Legend legend = new Legend();
-        legend.setEnabled(false);
-        conf.setLegend(legend);
+        spark.getConfiguration().getTooltip().setEnabled(false);
+
+//        Configuration conf = getConfiguration();
+//
+//        Legend legend = new Legend();
+//        legend.setEnabled(false);
+//        conf.setLegend(legend);
 
         Credits c = new Credits("");
         spark.getConfiguration().setCredits(c);
 
-        PlotOptionsLine opts = new PlotOptionsLine();
+        PlotOptionsPie opts = new PlotOptionsPie();
         opts.setAllowPointSelect(false);
-        opts.setColor(color);
-//        opts.setDataLabels(new DataLabels(false));
-        opts.setLineWidth(1);
-        opts.setShadow(false);
-        opts.setDashStyle(DashStyle.SOLID);
-//        opts.setMarker(new Marker(false));
         opts.setEnableMouseTracking(false);
         opts.setAnimation(false);
         spark.getConfiguration().setPlotOptions(opts);
@@ -93,4 +86,6 @@ public class SparklineChartPie extends VerticalLayout {
 
         return spark;
     }
+
+
 }

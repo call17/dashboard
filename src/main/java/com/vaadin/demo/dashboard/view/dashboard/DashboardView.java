@@ -89,6 +89,7 @@ public final class DashboardView extends Panel implements View,
         CssLayout sparks = new CssLayout();
         sparks.addStyleName("sparks");
         sparks.setWidth("100%");
+        sparks.setHeightUndefined();
         Responsive.makeResponsive(sparks);
 
         SparklineChartColumn s = new SparklineChartColumn("Сгорание тестов",
@@ -168,6 +169,7 @@ public final class DashboardView extends Panel implements View,
         dashboardPanels.addComponent(buildPriorityChart());
         dashboardPanels.addComponent(buildConvergenceChart());
         dashboardPanels.addComponent(buildMTTR());
+        dashboardPanels.addComponent(buildMTTR2());
 
         return dashboardPanels;
     }
@@ -195,6 +197,14 @@ public final class DashboardView extends Panel implements View,
     }
 
     private Component buildMTTR() {
+
+        MTTRChart mttrChart = new MTTRChart();
+        mttrChart.setSizeFull();
+
+        return createContentWrapper(mttrChart);
+    }
+
+    private Component buildMTTR2() {
 
         MTTRChart mttrChart = new MTTRChart();
         mttrChart.setSizeFull();

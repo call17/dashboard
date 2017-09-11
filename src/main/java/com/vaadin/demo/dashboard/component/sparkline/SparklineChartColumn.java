@@ -45,8 +45,8 @@ public class SparklineChartColumn extends VerticalLayout {
         spark.getConfiguration().setTitle("");
         spark.getConfiguration().getChart().setType(ChartType.COLUMN);
         spark.getConfiguration().getChart().setAnimation(false);
-        spark.setWidth("120px");
-        spark.setHeight("60px");
+        spark.setWidth("100%");
+        spark.setHeight("120px");
 
         DataSeries series = new DataSeries();
         for (int i = 0; i < values.length; i++) {
@@ -57,6 +57,7 @@ public class SparklineChartColumn extends VerticalLayout {
         spark.getConfiguration().getTooltip().setEnabled(false);
 
         Configuration conf = series.getConfiguration();
+
         Legend legend = new Legend();
         legend.setEnabled(false);
         conf.setLegend(legend);
@@ -65,31 +66,36 @@ public class SparklineChartColumn extends VerticalLayout {
         spark.getConfiguration().setCredits(c);
 
         PlotOptionsLine opts = new PlotOptionsLine();
-        opts.setAllowPointSelect(false);
+//        opts.setAllowPointSelect(false);
         opts.setColor(color);
-        opts.setDataLabels(new DataLabels(false));
-        opts.setLineWidth(1);
-        opts.setShadow(false);
-        opts.setDashStyle(DashStyle.SOLID);
-        opts.setMarker(new Marker(false));
+//        opts.setDataLabels(new DataLabels(false));
+//        opts.setLineWidth(1);
+//        opts.setShadow(false);
+//        opts.setDashStyle(DashStyle.SOLID);
+//        opts.setMarker(new Marker(false));
         opts.setEnableMouseTracking(false);
         opts.setAnimation(false);
+        opts.setStacking(Stacking.NORMAL);
         spark.getConfiguration().setPlotOptions(opts);
 
-        XAxis xAxis = spark.getConfiguration().getxAxis();
-        YAxis yAxis = spark.getConfiguration().getyAxis();
-
-        SolidColor transparent = new SolidColor(0, 0, 0, 0);
-
+        XAxis xAxis = new XAxis();
+        xAxis.setCategories("");
         xAxis.setLabels(new Labels(false));
         xAxis.setTickWidth(0);
         xAxis.setLineWidth(0);
+        spark.getConfiguration().addxAxis(xAxis);
 
-        yAxis.setTitle(new AxisTitle(""));
+        YAxis yAxis = new YAxis();
+        yAxis.setMin(0);
+        SolidColor transparent = new SolidColor(0, 0, 0, 0);
         yAxis.setAlternateGridColor(transparent);
         yAxis.setLabels(new Labels(false));
         yAxis.setLineWidth(0);
         yAxis.setGridLineWidth(0);
+        StackLabels sLabels = new StackLabels(true);
+        yAxis.setStackLabels(sLabels);
+        spark.getConfiguration().addyAxis(yAxis);
+
 
         return spark;
     }
