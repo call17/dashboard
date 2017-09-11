@@ -5,10 +5,13 @@ import java.util.Iterator;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.demo.dashboard.DashboardUI;
-import com.vaadin.demo.dashboard.component.SparklineChart;
-import com.vaadin.demo.dashboard.component.TopGrossingMoviesChart;
-import com.vaadin.demo.dashboard.component.TopSixTheatersChart;
-import com.vaadin.demo.dashboard.component.TopTenMoviesTable;
+import com.vaadin.demo.dashboard.component.chart.DefectConvergenceChart;
+import com.vaadin.demo.dashboard.component.chart.DefectDensityChart;
+import com.vaadin.demo.dashboard.component.chart.DefectPriorityChart;
+import com.vaadin.demo.dashboard.component.chart.MTTRChart;
+import com.vaadin.demo.dashboard.component.sparkline.SparklineChartLine;
+import com.vaadin.demo.dashboard.component.sparkline.SparklineChartColumn;
+import com.vaadin.demo.dashboard.component.sparkline.SparklineChartPie;
 import com.vaadin.demo.dashboard.data.dummy.DummyDataGenerator;
 import com.vaadin.demo.dashboard.domain.DashboardNotification;
 import com.vaadin.demo.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -35,7 +38,6 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
@@ -89,20 +91,20 @@ public final class DashboardView extends Panel implements View,
         sparks.setWidth("100%");
         Responsive.makeResponsive(sparks);
 
-        SparklineChart s = new SparklineChart("Traffic", "K", "",
-                DummyDataGenerator.chartColors[0], 22, 20, 80);
+        SparklineChartColumn s = new SparklineChartColumn("Сгорание тестов",
+                DummyDataGenerator.chartColors[0], 1, 20, 80);
         sparks.addComponent(s);
 
-        s = new SparklineChart("Revenue / Day", "M", "$",
-                DummyDataGenerator.chartColors[2], 8, 89, 150);
-        sparks.addComponent(s);
+        SparklineChartPie s1 = new SparklineChartPie("Блокер/Критикал",
+                DummyDataGenerator.chartColors[2], 2, 89, 150);
+        sparks.addComponent(s1);
 
-        s = new SparklineChart("Checkout Time", "s", "",
-                DummyDataGenerator.chartColors[3], 10, 30, 120);
-        sparks.addComponent(s);
+        s1 = new SparklineChartPie("Сходимость дефектов",
+                DummyDataGenerator.chartColors[3], 2, 30, 120);
+        sparks.addComponent(s1);
 
-        s = new SparklineChart("Theater Fill Rate", "%", "",
-                DummyDataGenerator.chartColors[5], 50, 34, 100);
+        s = new SparklineChartColumn("Плотность дефектов",
+                DummyDataGenerator.chartColors[5], 50, 5, 100);
         sparks.addComponent(s);
 
         return sparks;
@@ -163,37 +165,41 @@ public final class DashboardView extends Panel implements View,
         Responsive.makeResponsive(dashboardPanels);
 
         dashboardPanels.addComponent(buildTopGrossingMovies());
-        dashboardPanels.addComponent(buildNotes());
-        dashboardPanels.addComponent(buildTop10TitlesByRevenue());
-        dashboardPanels.addComponent(buildPopularMovies());
+        dashboardPanels.addComponent(buildPriorityChart());
+        dashboardPanels.addComponent(buildConvergenceChart());
+        dashboardPanels.addComponent(buildMTTR());
 
         return dashboardPanels;
     }
 
     private Component buildTopGrossingMovies() {
-        TopGrossingMoviesChart topGrossingMoviesChart = new TopGrossingMoviesChart();
-        topGrossingMoviesChart.setSizeFull();
-        return createContentWrapper(topGrossingMoviesChart);
+        DefectDensityChart defectDensityChart = new DefectDensityChart();
+        defectDensityChart.setSizeFull();
+        return createContentWrapper(defectDensityChart);
     }
 
-    private Component buildNotes() {
-        TextArea notes = new TextArea("Notes");
-        notes.setValue("Remember to:\n· Zoom in and out in the Sales view\n· Filter the transactions and drag a set of them to the Reports tab\n· Create a new report\n· Change the schedule of the movie theater");
-        notes.setSizeFull();
-        notes.addStyleName(ValoTheme.TEXTAREA_BORDERLESS);
-        Component panel = createContentWrapper(notes);
-        panel.addStyleName("notes");
-        return panel;
+    private Component buildPriorityChart() {
+
+        DefectPriorityChart defectPriorityChart = new DefectPriorityChart();
+        defectPriorityChart.setSizeFull();
+
+        return createContentWrapper(defectPriorityChart);
     }
 
-    private Component buildTop10TitlesByRevenue() {
-        Component contentWrapper = createContentWrapper(new TopTenMoviesTable());
-        contentWrapper.addStyleName("top10-revenue");
-        return contentWrapper;
+    private Component buildConvergenceChart() {
+
+        DefectConvergenceChart defectConvergenceChart = new DefectConvergenceChart();
+        defectConvergenceChart.setSizeFull();
+
+        return createContentWrapper(defectConvergenceChart);
     }
 
-    private Component buildPopularMovies() {
-        return createContentWrapper(new TopSixTheatersChart());
+    private Component buildMTTR() {
+
+        MTTRChart mttrChart = new MTTRChart();
+        mttrChart.setSizeFull();
+
+        return createContentWrapper(mttrChart);
     }
 
     private Component createContentWrapper(final Component content) {

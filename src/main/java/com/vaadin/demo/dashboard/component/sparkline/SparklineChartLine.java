@@ -1,4 +1,4 @@
-package com.vaadin.demo.dashboard.component;
+package com.vaadin.demo.dashboard.component.sparkline;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,11 +31,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-public class SparklineChart extends VerticalLayout {
+public class SparklineChartLine extends VerticalLayout {
 
-    public SparklineChart(final String name, final String unit,
-            final String prefix, final Color color, final int howManyPoints,
-            final int min, final int max) {
+    public SparklineChartLine(final String name, final String unit,
+                              final String prefix, final Color color, final int howManyPoints,
+                              final int min, final int max) {
         setSizeUndefined();
         addStyleName("spark");
         setMargin(false);
@@ -58,17 +58,6 @@ public class SparklineChart extends VerticalLayout {
 
         addComponent(buildSparkline(values, color));
 
-        List<Integer> vals = Arrays.asList(ArrayUtils.toObject(values));
-        Label highLow = new Label(
-                "High <b>" + java.util.Collections.max(vals)
-                        + "</b> &nbsp;&nbsp;&nbsp; Low <b>"
-                        + java.util.Collections.min(vals) + "</b>",
-                ContentMode.HTML);
-        highLow.addStyleName(ValoTheme.LABEL_TINY);
-        highLow.addStyleName(ValoTheme.LABEL_LIGHT);
-        highLow.setSizeUndefined();
-        addComponent(highLow);
-
     }
 
     private Component buildSparkline(final int[] values, final Color color) {
@@ -77,7 +66,7 @@ public class SparklineChart extends VerticalLayout {
         spark.getConfiguration().getChart().setType(ChartType.LINE);
         spark.getConfiguration().getChart().setAnimation(false);
         spark.setWidth("120px");
-        spark.setHeight("40px");
+        spark.setHeight("60px");
 
         DataSeries series = new DataSeries();
         for (int i = 0; i < values.length; i++) {
