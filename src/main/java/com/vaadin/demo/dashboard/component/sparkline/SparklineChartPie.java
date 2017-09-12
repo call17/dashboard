@@ -47,42 +47,27 @@ public class SparklineChartPie extends VerticalLayout {
         spark.getConfiguration().setTitle("");
         spark.getConfiguration().getChart().setType(ChartType.PIE);
         spark.getConfiguration().getChart().setAnimation(false);
-        spark.setWidth("120px");
-        spark.setHeight("70px");
+        spark.setWidth("150px");
+        spark.setHeight("100px");
 
 
-
-        spark.getConfiguration().getTooltip().setEnabled(false);
-
-//        Configuration conf = getConfiguration();
-//
-//        Legend legend = new Legend();
-//        legend.setEnabled(false);
-//        conf.setLegend(legend);
-
-        Credits c = new Credits("");
-        spark.getConfiguration().setCredits(c);
+        spark.getConfiguration().setCredits(new Credits(false));
 
         PlotOptionsPie opts = new PlotOptionsPie();
-        opts.setAllowPointSelect(false);
-        opts.setEnableMouseTracking(false);
-        opts.setAnimation(false);
+        opts.setAllowPointSelect(true);
+        opts.setCursor(Cursor.POINTER);
+        opts.setDataLabels(new DataLabels(false));
         spark.getConfiguration().setPlotOptions(opts);
 
-        XAxis xAxis = spark.getConfiguration().getxAxis();
-        YAxis yAxis = spark.getConfiguration().getyAxis();
 
-        SolidColor transparent = new SolidColor(0, 0, 0, 0);
+        DataSeries series = new DataSeries();
+        series.add(new DataSeriesItem("Critical",5));
+        series.add(new DataSeriesItem("Blocker",2));
 
-        xAxis.setLabels(new Labels(false));
-        xAxis.setTickWidth(0);
-        xAxis.setLineWidth(0);
 
-        yAxis.setTitle(new AxisTitle(""));
-        yAxis.setAlternateGridColor(transparent);
-        yAxis.setLabels(new Labels(false));
-        yAxis.setLineWidth(0);
-        yAxis.setGridLineWidth(0);
+        spark.getConfiguration().addSeries(series);
+
+
 
         return spark;
     }

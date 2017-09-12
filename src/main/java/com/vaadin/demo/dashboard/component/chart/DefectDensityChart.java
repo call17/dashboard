@@ -28,7 +28,7 @@ public class DefectDensityChart extends Chart {
 
         PlotOptionsLine plotOptions = new PlotOptionsLine();
         plotOptions.setDataLabels(new DataLabels(true));
-        plotOptions.setEnableMouseTracking(false);
+        plotOptions.setEnableMouseTracking(true);
         getConfiguration().setPlotOptions(plotOptions);
 
         ListSeries ls = new ListSeries();
